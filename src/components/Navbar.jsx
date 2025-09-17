@@ -2,121 +2,168 @@ import React, { useState, useEffect } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import Logo from '../assets/TathastuLogo.png';
+import { FaTimes, FaChevronDown } from 'react-icons/fa';
 
 const Navbar = () => {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
 
-  const toggleMobileMenu = () => setMobileMenuOpen(!isMobileMenuOpen);
-  const toggleDropdown = () => setDropdownOpen(!isDropdownOpen);
-
   useEffect(() => {
-    AOS.init({
-      duration: 800,
-      once: true,
-    });
+    AOS.init({ duration: 800, once: true });
   }, []);
 
+  const services = [
+    'Property Management',
+    'Collaboration',
+    'Legal Guidance',
+    'Listing & Marketing',
+  ];
+
+  // Menu order: Home → Services → About Us → Contact Us
+  const menuItems = ['Home', 'About Us', 'Contact Us'];
+
   return (
-    <nav
-      className="bg-gradient-to-r from-[#FFD700] via-[#121212] to-[#FFD700] shadow-xl transition-all duration-500"
-      data-aos="fade-down"
-    >
-      <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-4">
+    <nav className="relative z-50 bg-gradient-to-r from-black via-gray-900 to-black shadow-xl">
+      <div className="flex justify-between items-center max-w-screen-xl mx-auto p-4">
         {/* Logo */}
-        <a href="#" className="flex items-center space-x-3 rtl:space-x-reverse group">
+        <a href="#" className="flex items-center space-x-3 group">
           <img
             src={Logo}
-            className="h-10 transition-transform duration-500 group-hover:scale-110 rounded-full"
+            className="h-10 transition-transform duration-500 group-hover:scale-110 rounded-full shadow-lg"
             alt="Tathastu Realtor Logo"
           />
-          <span className="self-center text-2xl font-bold whitespace-nowrap text-gold-shine drop-shadow-md animate-gold-shimmer">
+          <span className="text-2xl font-bold text-yellow-400 drop-shadow-lg animate-pulse">
             Tathastu Realtor
           </span>
         </a>
 
-        {/* Mobile Toggle */}
+        {/* Mobile toggle */}
         <button
-          type="button"
-          onClick={toggleMobileMenu}
-          className="inline-flex items-center p-2 w-10 h-10 justify-center text-[#FFD700] rounded-lg md:hidden hover:bg-[#FFD700] hover:text-black focus:outline-none focus:ring-2 focus:ring-[#FFD700] transition-colors duration-300"
+          className="md:hidden text-yellow-400 p-2 rounded-lg hover:bg-yellow-400 hover:text-black transition duration-300"
+          onClick={() => setMobileMenuOpen(!isMobileMenuOpen)}
         >
-          <span className="sr-only">Open main menu</span>
-          <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
-            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h15M1 7h15M1 13h15" />
-          </svg>
+          {isMobileMenuOpen ? <FaTimes size={24} /> : (
+            <svg className="w-6 h-6" fill="none" viewBox="0 0 17 14" xmlns="http://www.w3.org/2000/svg">
+              <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h15M1 7h15M1 13h15" />
+            </svg>
+          )}
         </button>
 
-        {/* Desktop Nav */}
-        <div className={`${isMobileMenuOpen ? 'flex' : 'hidden'} items-center justify-between font-medium w-full md:flex md:w-auto md:order-1`}>
-          <ul className="flex flex-col p-4 md:p-0 mt-4 border border-gray-800 rounded-lg bg-[#121212]/90 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-transparent">
-            {['Home', 'About Us', 'Contact Us'].map((item, i) => (
-              <li key={item}>
+        {/* Desktop Menu */}
+        <ul className="hidden md:flex md:items-center md:space-x-8 text-yellow-400 font-medium relative">
+          {menuItems.map((item, i) => {
+            // Insert Services after "Home"
+            if (item === 'About Us') {
+              return (
+                <React.Fragment key={i}>
+                  {/* Services Dropdown */}
+                  <li className="relative group">
+                    <button className="flex items-center hover:text-yellow-200 transition duration-300">
+                      Services <FaChevronDown className="ml-1" />
+                    </button>
+                    <div className="absolute left-0 top-full min-w-[200px] bg-black/95 backdrop-blur-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 rounded-md overflow-hidden shadow-lg">
+                      {services.map((service, index) => (
+                        <a
+                          key={index}
+                          href="#"
+                          className="block p-4 text-yellow-400 hover:text-yellow-200 hover:bg-black/50 transition"
+                        >
+                          {service}
+                        </a>
+                      ))}
+                    </div>
+                  </li>
+
+                  {/* About Us */}
+                  <li>
+                    <a
+                      href="#"
+                      className="hover:text-yellow-200 transition duration-300"
+                      data-aos="fade-down"
+                      data-aos-delay={i * 100}
+                    >
+                      {item}
+                    </a>
+                  </li>
+                </React.Fragment>
+              );
+            }
+
+            // Render normal menu items
+            return (
+              <li key={i}>
                 <a
                   href="#"
-                  className="block py-2 px-3 text-white rounded-sm hover:text-[#FFD700] transition-all duration-300 hover:scale-105"
-                  data-aos="fade-up"
+                  className="hover:text-yellow-200 transition duration-300"
+                  data-aos="fade-down"
                   data-aos-delay={i * 100}
                 >
                   {item}
                 </a>
               </li>
-            ))}
-
-            {/* Dropdown */}
-            <li>
-              <button
-                onClick={toggleDropdown}
-                className="flex items-center justify-between w-full py-2 px-3 text-white rounded-sm md:w-auto hover:text-[#FFD700] transition-all duration-300 hover:scale-105"
-              >
-                Services
-                <svg className="w-3 h-3 ms-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
-                </svg>
-              </button>
-            </li>
-          </ul>
-        </div>
+            );
+          })}
+        </ul>
       </div>
 
-      {/* Dropdown Panel */}
+      {/* Mobile Overlay */}
       <div
-        className={`transition-all duration-500 ease-in-out overflow-hidden ${
-          isDropdownOpen ? 'max-h-[500px] opacity-100 scale-100' : 'max-h-0 opacity-0 scale-95'
-        } bg-gradient-to-r from-[#FFD700] via-[#121212] to-[#FFD700] border-t border-[#FFD700]`}
+        className={`fixed inset-0 bg-black/50 backdrop-blur-sm z-40 transition-opacity duration-300 ${isMobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+        onClick={() => setMobileMenuOpen(false)}
+      ></div>
+
+      {/* Mobile Menu */}
+      <div
+        className={`fixed top-0 right-0 h-full w-3/4 max-w-sm bg-black/95 backdrop-blur-md z-50 transform transition-transform duration-500 ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}
       >
-        <div className="grid max-w-screen-xl px-4 py-5 mx-auto text-white sm:grid-cols-2 md:px-6">
-          <ul className="col-span-2 grid sm:grid-cols-2 gap-4">
-            {[
-              {
-                title: 'Property Management',
-                desc: 'Complete care of your property with expert oversight.',
-              },
-              {
-                title: 'Collaboration',
-                desc: 'Work with industry partners to maximize results.',
-              },
-              {
-                title: 'Legal Guidance',
-                desc: 'Clear legal support for your real estate needs.',
-              },
-              {
-                title: 'Listing & Marketing',
-                desc: 'Professional listing and promotion of your property.',
-              },
-            ].map((service) => (
-              <li key={service.title}>
+        <div className="flex justify-between items-center p-4 border-b border-yellow-400">
+          <h2 className="text-yellow-400 font-bold text-xl">Menu</h2>
+          <button onClick={() => setMobileMenuOpen(false)} className="text-yellow-400">
+            <FaTimes size={24} />
+          </button>
+        </div>
+        <ul className="flex flex-col p-4 space-y-3 text-yellow-400 font-medium">
+          {['Home', 'Services', 'About Us', 'Contact Us'].map((item, i) => {
+            if (item === 'Services') {
+              return (
+                <li key={i}>
+                  <button
+                    onClick={() => setDropdownOpen(!isDropdownOpen)}
+                    className="flex justify-between items-center w-full py-2 px-2 hover:text-yellow-200 hover:bg-yellow-900/20 rounded transition"
+                  >
+                    Services <FaChevronDown />
+                  </button>
+                  {isDropdownOpen && (
+                    <ul className="pl-4 mt-2 flex flex-col space-y-2">
+                      {services.map((service, index) => (
+                        <li key={index}>
+                          <a
+                            href="#"
+                            className="block py-2 px-2 hover:text-yellow-200 hover:bg-yellow-900/20 rounded transition"
+                            onClick={() => setMobileMenuOpen(false)}
+                          >
+                            {service}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </li>
+              );
+            }
+            return (
+              <li key={i}>
                 <a
                   href="#"
-                  className="block p-4 rounded-lg hover:bg-[#1a1a1a]/50 transition-all duration-300 hover:scale-[1.02]"
+                  className="block py-2 px-2 hover:text-yellow-200 hover:bg-yellow-900/20 rounded transition"
+                  onClick={() => setMobileMenuOpen(false)}
                 >
-                  <div className="font-semibold text-[#FFD700]">{service.title}</div>
-                  <span className="text-sm text-gray-300">{service.desc}</span>
+                  {item}
                 </a>
               </li>
-            ))}
-          </ul>
-        </div>
+            );
+          })}
+        </ul>
       </div>
     </nav>
   );
