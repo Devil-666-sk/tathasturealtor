@@ -1,13 +1,13 @@
 import React from "react";
-import ThemeProvider from "./components/ThemeProvider";
-import Typography from "./components/Typography";
-import Button from "./components/Button";
 import Navbar from "./components/Navbar";
+import HeroSections from "./components/HeroSections";
 
 function App() {
   return (
    <>
-    <Navbar /></>
+    <Navbar />
+    <HeroSections/>
+    </>
   );
 }
 
