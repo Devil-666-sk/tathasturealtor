@@ -10,18 +10,17 @@ const HeroSections = () => {
       }}
     >
       {/* Overlay */}
-      <div className="absolute inset-0 bg-black/50"></div>
+      <div className="absolute inset-0 bg-black/70"></div>
 
       {/* Content */}
-      <div className="relative z-10 max-w-3xl text-white">
+      <div className="relative z-10 max-w-3xl text-center text-white">
         <h1 className="text-3xl md:text-5xl font-bold mb-4">
-          Find Your Dream Home Today
+          Find Your <span className="text-yellow-500">Dream Home</span> Today
         </h1>
-        <p className="text-base md:text-lg mb-6">
-          Discover luxury apartments, modern homes, and prime real estate
-          tailored just for you.
+        <p className="text-base md:text-lg mb-6 text-yellow-200">
+          Discover luxury apartments, modern homes, and prime real estate tailored just for you.
         </p>
-        <button className="px-6 py-3 bg-gradient-to-r from-yellow-500 to-yellow-700 text-white font-semibold rounded-lg shadow-md hover:scale-105 transition-transform duration-300">
+        <button className="px-8 py-4 bg-gradient-to-r from-yellow-500 via-yellow-600 to-yellow-700 text-black font-semibold rounded-xl shadow-lg hover:scale-105 hover:shadow-2xl transition-transform duration-300">
           Get Started
         </button>
       </div>
