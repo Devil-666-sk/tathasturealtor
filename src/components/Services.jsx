@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FaHandshake, FaGavel, FaBullhorn, FaBuilding } from "react-icons/fa";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const servicesData = [
   {
@@ -29,27 +31,37 @@ const servicesData = [
 ];
 
 const Services = () => {
+  useEffect(() => {
+    AOS.init({ duration: 1000 });
+  }, []);
+
   return (
-    <section className="py-20 bg-gray-900 text-yellow-400" id="services">
+    <section className="py-20 bg-gradient-to-r from-black via-gray-900 to-black text-yellow-400" id="services">
       <div className="max-w-7xl mx-auto px-6">
-        {/* Heading */}
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold mb-4">Our Services</h2>
-          <p className="text-lg text-gray-300 max-w-2xl mx-auto">
+        
+        {/* ====== HEADING ====== */}
+        <div className="text-center mb-16" data-aos="fade-up">
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+            Our <span className="text-yellow-400">Services</span>
+          </h2>
+          <div className="w-24 h-1 bg-yellow-400 mx-auto rounded-full mb-6"></div>
+          <p className="text-gray-300 max-w-2xl mx-auto text-lg leading-relaxed">
             We provide complete real estate solutions — from collaboration to
-            management — ensuring trust, transparency, and growth.
+            management — ensuring <span className="text-yellow-400 font-medium">trust, transparency, and growth.</span>
           </p>
         </div>
 
-        {/* Service Grid */}
+        {/* ====== SERVICE GRID ====== */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {servicesData.map((service, index) => (
             <div
               key={index}
+              data-aos="fade-up"
+              data-aos-delay={index * 150}
               className="bg-black/80 rounded-2xl shadow-lg p-8 hover:scale-105 transition-transform duration-300 border border-yellow-400/30 hover:border-yellow-400"
             >
               <div className="flex justify-center mb-6">{service.icon}</div>
-              <h3 className="text-xl font-semibold text-center mb-4">
+              <h3 className="text-xl font-semibold text-center mb-4 text-white">
                 {service.title}
               </h3>
               <p className="text-gray-300 text-center">{service.description}</p>

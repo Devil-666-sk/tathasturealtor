@@ -17,6 +17,11 @@ import LegalGuidance from "./components/LegalGuidance";
 import ListingMarketing from "./components/ListingMarketing";
 import PropertyManagement from "./components/PropertyManagement";
 import Services from "./components/Services";
+import OurProjects from "./components/OurProjects";
+
+// ----------------------------
+// PAGE COMPONENTS
+// ----------------------------
 
 const HomePage = () => (
   <>
@@ -24,7 +29,8 @@ const HomePage = () => (
     <ProjectHighlights />
     <PropertyOptions />
     <Amenities />
-    <Gallery />    
+    <OurProjects />
+    <Gallery />
     <WhyChoose />
     <Testimonials />
     <LocationMap />
@@ -52,16 +58,80 @@ const AboutPage = () => (
 const ServicesPage = () => (
   <>
     <HeroSection />
-    <Services/>
-    
+    <Services />
     <ProjectHighlights />
     <PropertyOptions />
     <Amenities />
+    <OurProjects />
     <Gallery />
     <WhyChoose />
     <Testimonials />
   </>
 );
+
+// ----------------------------
+// INDIVIDUAL SERVICE PAGES
+// ----------------------------
+
+const CollaborationPage = () => (
+  <>
+    <HeroSection />
+    <Collaboration />
+    <ProjectHighlights />
+    <PropertyOptions />
+    <Amenities />
+    <OurProjects />
+    <Gallery />
+    <WhyChoose />
+    <Testimonials />
+  </>
+);
+
+const LegalGuidancePage = () => (
+  <>
+    <HeroSection />
+    <LegalGuidance />
+    <ProjectHighlights />
+    <PropertyOptions />
+    <Amenities />
+    <OurProjects />
+    <Gallery />
+    <WhyChoose />
+    <Testimonials />
+  </>
+);
+
+const ListingMarketingPage = () => (
+  <>
+    <HeroSection />
+    <ListingMarketing />
+    <ProjectHighlights />
+    <PropertyOptions />
+    <Amenities />
+    <OurProjects />
+    <Gallery />
+    <WhyChoose />
+    <Testimonials />
+  </>
+);
+
+const PropertyManagementPage = () => (
+  <>
+    <HeroSection />
+    <PropertyManagement />
+    <ProjectHighlights />
+    <PropertyOptions />
+    <Amenities />
+    <OurProjects />
+    <Gallery />
+    <WhyChoose />
+    <Testimonials />
+  </>
+);
+
+// ----------------------------
+// MAIN APP ROUTES
+// ----------------------------
 
 function App() {
   return (
@@ -72,6 +142,11 @@ function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/services" element={<ServicesPage />} />
+        {/* ↓ Individual service routes */}
+        <Route path="/services/collaboration" element={<CollaborationPage />} />
+        <Route path="/services/legal-guidance" element={<LegalGuidancePage />} />
+        <Route path="/services/listing-&-marketing" element={<ListingMarketingPage />} />
+        <Route path="/services/property-management" element={<PropertyManagementPage />} />
       </Routes>
       <Footer />
     </Router>
